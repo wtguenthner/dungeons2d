@@ -20,6 +20,7 @@ class Player {
     }
 
     draw(){
+        c.fillStyle='black';
         c.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
     
@@ -32,8 +33,24 @@ class Player {
         }else{this.velocity.y =0}
     }
 }
+class Platform {
+    constructor(){
+        this.position = {
+            x: 0,
+            y:0,
+        }
+        this.width = 200;
+        this.height = 20;
+    }
 
+    draw(){
+        c.fillStyle = 'blue'
+        c.fillRect(this.position.x, this.position.y,
+             this.width, this.height)
+    }
+}
 const player = new Player();
+const platform = new Platform();
 const keys = {
     right:{
         pressed: false
@@ -47,6 +64,7 @@ function animate(){
     requestAnimationFrame(animate);
     c.clearRect(0,0, canvas.width, canvas.height);
     player.update();
+    platform.draw();
     if(keys.right.pressed){
         player.velocity.x = 5
     }else if(keys.left.pressed){
@@ -65,7 +83,7 @@ addEventListener('keydown', ({keyCode}) =>{
     switch (keyCode) {
         case 65:
             //TODO: instructions for A button
-            keys.right.pressed = true;
+            keys.left.pressed = true;
             player.velocity.x -= 1;
             break;
        case 68:
@@ -78,8 +96,10 @@ addEventListener('keydown', ({keyCode}) =>{
             //TODO instructions for S button
             break;
          case 87:
-            //TODO instructions for W button  
-            player.velocity.y -= 20; 
+            //TODO instructions for W button 
+            
+            player.velocity.y -= 10; 
+            
         default:
             break;
     }
