@@ -95,7 +95,20 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "02a1c8d178b07eb8e4a5cbd52bf128a4.png");
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "5bf70341a8165a5d8b3186d47a770ee1.png");
+
+/***/ }),
+
+/***/ "./src/img/platform_stone.png":
+/*!************************************!*\
+  !*** ./src/img/platform_stone.png ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "c17e6df33f41cf81138afafda2dda106.png");
 
 /***/ }),
 
@@ -109,6 +122,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _img_platform_grass_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../img/platform_grass.png */ "./src/img/platform_grass.png");
+/* harmony import */ var _img_platform_stone_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../img/platform_stone.png */ "./src/img/platform_stone.png");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
@@ -118,6 +132,10 @@ canvas.width = innerWidth;
 canvas.height = innerHeight;
 var gravity = 0.5;
 
+
+var platformImages = [_img_platform_grass_png__WEBPACK_IMPORTED_MODULE_0__["default"], _img_platform_stone_png__WEBPACK_IMPORTED_MODULE_1__["default"]];
+var image = new Image();
+image.src = platformImages[Math.floor(Math.random() * platformImages.length)];
 var Player = /*#__PURE__*/function () {
   function Player() {
     _classCallCheck(this, Player);
@@ -157,20 +175,21 @@ console.log(window);
 var Platform = /*#__PURE__*/function () {
   function Platform(_ref) {
     var x = _ref.x,
-      y = _ref.y;
+      y = _ref.y,
+      image = _ref.image;
     _classCallCheck(this, Platform);
     this.position = {
       x: x,
       y: y
     };
     this.width = 200;
-    this.height = 20;
+    this.height = 100;
+    this.image = image;
   }
   _createClass(Platform, [{
     key: "draw",
     value: function draw() {
-      c.fillStyle = "blue";
-      c.fillRect(this.position.x, this.position.y, this.width, this.height);
+      c.drawImage(this.image, this.position.x, this.position.y);
     }
   }]);
   return Platform;
@@ -178,10 +197,12 @@ var Platform = /*#__PURE__*/function () {
 var player = new Player();
 var platforms = [new Platform({
   x: 200,
-  y: 100
+  y: 200,
+  image: image
 }), new Platform({
   x: 500,
-  y: 200
+  y: 300,
+  image: image
 })];
 var keys = {
   right: {

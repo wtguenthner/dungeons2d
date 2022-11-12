@@ -2,9 +2,15 @@ const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 canvas.width = innerWidth;
 canvas.height = innerHeight;
-
 const gravity = 0.5;
+
 import grassPlatform from '../img/platform_grass.png';
+import stonePlatform from '../img/platform_stone.png';
+const platformImages = [grassPlatform, stonePlatform];
+
+const image = new Image();
+image.src = platformImages[Math.floor(Math.random()*platformImages.length)]
+
 
 class Player {
   constructor() {
@@ -42,25 +48,27 @@ class Player {
 console.log(window);
 
 class Platform {
-  constructor({ x, y }) {
+  constructor({ x, y, image }) {
     this.position = {
       x,
       y,
     };
-    this.width = 200;
-    this.height = 20;
+    this.width =200;
+    this.height = 100;
+    this.image = image; 
   }
-
+  
   draw() {
-    c.fillStyle = "blue";
-    c.fillRect(this.position.x, this.position.y, this.width, this.height);
+    c.drawImage(this.image, this.position.x, this.position.y)
   }
 }
+
 const player = new Player();
 
 const platforms = [
-  new Platform({ x: 200, y: 100 }),
-  new Platform({ x: 500, y: 200 }),
+  new Platform({ x: 200, y: 200,
+  image }),
+  new Platform({ x: 500, y: 300, image }),
 ];
 
 const keys = {
