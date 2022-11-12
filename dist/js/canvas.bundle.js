@@ -112,17 +112,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/js/canvas.js":
+/***/ "./src/js/Player.js":
 /*!**************************!*\
-  !*** ./src/js/canvas.js ***!
+  !*** ./src/js/Player.js ***!
   \**************************/
-/*! no exports provided */
+/*! exports provided: Player */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _img_platform_grass_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../img/platform_grass.png */ "./src/img/platform_grass.png");
-/* harmony import */ var _img_platform_stone_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../img/platform_stone.png */ "./src/img/platform_stone.png");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Player", function() { return Player; });
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
@@ -130,12 +129,7 @@ var canvas = document.querySelector("canvas");
 var c = canvas.getContext("2d");
 canvas.width = innerWidth;
 canvas.height = innerHeight;
-var gravity = 0.5;
-
-
-var platformImages = [_img_platform_grass_png__WEBPACK_IMPORTED_MODULE_0__["default"], _img_platform_stone_png__WEBPACK_IMPORTED_MODULE_1__["default"]];
-var image = new Image();
-image.src = platformImages[Math.floor(Math.random() * platformImages.length)];
+var gravity = .5;
 var Player = /*#__PURE__*/function () {
   function Player() {
     _classCallCheck(this, Player);
@@ -171,7 +165,35 @@ var Player = /*#__PURE__*/function () {
   }]);
   return Player;
 }();
-console.log(window);
+
+
+/***/ }),
+
+/***/ "./src/js/canvas.js":
+/*!**************************!*\
+  !*** ./src/js/canvas.js ***!
+  \**************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Player */ "./src/js/Player.js");
+/* harmony import */ var _img_platform_grass_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../img/platform_grass.png */ "./src/img/platform_grass.png");
+/* harmony import */ var _img_platform_stone_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../img/platform_stone.png */ "./src/img/platform_stone.png");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+var canvas = document.querySelector("canvas");
+var c = canvas.getContext("2d");
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+
+
+var platformImages = [_img_platform_grass_png__WEBPACK_IMPORTED_MODULE_1__["default"], _img_platform_stone_png__WEBPACK_IMPORTED_MODULE_2__["default"]];
+var image = new Image();
+image.src = platformImages[Math.floor(Math.random() * platformImages.length)];
 var Platform = /*#__PURE__*/function () {
   function Platform(_ref) {
     var x = _ref.x,
@@ -194,7 +216,7 @@ var Platform = /*#__PURE__*/function () {
   }]);
   return Platform;
 }();
-var player = new Player();
+var player = new _Player__WEBPACK_IMPORTED_MODULE_0__["Player"]();
 var platforms = [new Platform({
   x: 200,
   y: 200,
