@@ -86,16 +86,55 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/img/platform_grass.png":
-/*!************************************!*\
-  !*** ./src/img/platform_grass.png ***!
-  \************************************/
+/***/ "./src/img/background.png":
+/*!********************************!*\
+  !*** ./src/img/background.png ***!
+  \********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "5bf70341a8165a5d8b3186d47a770ee1.png");
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "d0f34c76ae841698a15cf2d73614c7a4.png");
+
+/***/ }),
+
+/***/ "./src/img/idle.gif":
+/*!**************************!*\
+  !*** ./src/img/idle.gif ***!
+  \**************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "11f330884cc609f034bae46dfa1a506f.gif");
+
+/***/ }),
+
+/***/ "./src/img/platform.png":
+/*!******************************!*\
+  !*** ./src/img/platform.png ***!
+  \******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "f35754a9414a5fd29b0d16014384d9dc.png");
+
+/***/ }),
+
+/***/ "./src/img/platform1.png":
+/*!*******************************!*\
+  !*** ./src/img/platform1.png ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "c060c463a98541d8f261a355a8371a1f.png");
 
 /***/ }),
 
@@ -122,13 +161,13 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Player", function() { return Player; });
+/* harmony import */ var _img_idle_gif__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../img/idle.gif */ "./src/img/idle.gif");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 var canvas = document.querySelector("canvas");
 var c = canvas.getContext("2d");
-canvas.width = innerWidth;
-canvas.height = innerHeight;
+
 var gravity = .5;
 var Player = /*#__PURE__*/function () {
   function Player() {
@@ -141,14 +180,17 @@ var Player = /*#__PURE__*/function () {
       x: 0,
       y: 1
     };
-    this.width = 50;
-    this.height = 50;
+    this.width = 100;
+    this.height = 100;
+    this.image = new Image();
+    this.image.src = _img_idle_gif__WEBPACK_IMPORTED_MODULE_0__["default"];
   }
   _createClass(Player, [{
     key: "draw",
     value: function draw() {
-      c.fillStyle = "black";
-      c.fillRect(this.position.x, this.position.y, this.width, this.height);
+      // c.fillStyle = "black";
+      // c.fillRect(this.position.x, this.position.y, this.width, this.height);
+      c.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
     }
   }, {
     key: "update",
@@ -178,22 +220,31 @@ var Player = /*#__PURE__*/function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Player */ "./src/js/Player.js");
-/* harmony import */ var _img_platform_grass_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../img/platform_grass.png */ "./src/img/platform_grass.png");
-/* harmony import */ var _img_platform_stone_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../img/platform_stone.png */ "./src/img/platform_stone.png");
+/* harmony import */ var _img_background_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../img/background.png */ "./src/img/background.png");
+/* harmony import */ var _img_platform1_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../img/platform1.png */ "./src/img/platform1.png");
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Player */ "./src/js/Player.js");
+/* harmony import */ var _img_platform_png__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../img/platform.png */ "./src/img/platform.png");
+/* harmony import */ var _img_platform_stone_png__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../img/platform_stone.png */ "./src/img/platform_stone.png");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 var canvas = document.querySelector("canvas");
 var c = canvas.getContext("2d");
-canvas.width = innerWidth;
-canvas.height = innerHeight;
+canvas.width = 1024;
+canvas.height = 576;
 
 
 
-var platformImages = [_img_platform_grass_png__WEBPACK_IMPORTED_MODULE_1__["default"], _img_platform_stone_png__WEBPACK_IMPORTED_MODULE_2__["default"]];
+
+
+var platformImages = [_img_platform_png__WEBPACK_IMPORTED_MODULE_3__["default"], _img_platform_stone_png__WEBPACK_IMPORTED_MODULE_4__["default"]];
 var image = new Image();
-image.src = platformImages[Math.floor(Math.random() * platformImages.length)];
+image.src = _img_platform_png__WEBPACK_IMPORTED_MODULE_3__["default"];
+function createImage(imageSrc) {
+  var image = new Image();
+  image.src = imageSrc;
+  return image;
+}
 var Platform = /*#__PURE__*/function () {
   function Platform(_ref) {
     var x = _ref.x,
@@ -204,9 +255,9 @@ var Platform = /*#__PURE__*/function () {
       x: x,
       y: y
     };
-    this.width = 200;
-    this.height = 100;
     this.image = image;
+    this.width = image.width;
+    this.height = image.height;
   }
   _createClass(Platform, [{
     key: "draw",
@@ -216,15 +267,42 @@ var Platform = /*#__PURE__*/function () {
   }]);
   return Platform;
 }();
-var player = new _Player__WEBPACK_IMPORTED_MODULE_0__["Player"]();
+var GenericObject = /*#__PURE__*/function () {
+  function GenericObject(_ref2) {
+    var x = _ref2.x,
+      y = _ref2.y,
+      image = _ref2.image;
+    _classCallCheck(this, GenericObject);
+    this.position = {
+      x: x,
+      y: y
+    };
+    this.width = image.width;
+    this.height = image.height;
+    this.image = image;
+  }
+  _createClass(GenericObject, [{
+    key: "draw",
+    value: function draw() {
+      c.drawImage(this.image, this.position.x, this.position.y);
+    }
+  }]);
+  return GenericObject;
+}();
+var genericObjects = [new GenericObject({
+  x: 0,
+  y: 0,
+  image: createImage(_img_background_png__WEBPACK_IMPORTED_MODULE_0__["default"])
+})];
+var player = new _Player__WEBPACK_IMPORTED_MODULE_2__["Player"]();
 var platforms = [new Platform({
-  x: 200,
-  y: 200,
-  image: image
+  x: 0,
+  y: 520,
+  image: createImage(_img_platform_png__WEBPACK_IMPORTED_MODULE_3__["default"])
 }), new Platform({
-  x: 500,
-  y: 300,
-  image: image
+  x: image.width - 6,
+  y: 520,
+  image: createImage(_img_platform_png__WEBPACK_IMPORTED_MODULE_3__["default"])
 })];
 var keys = {
   right: {
@@ -237,10 +315,13 @@ var keys = {
 function animate() {
   requestAnimationFrame(animate);
   c.clearRect(0, 0, canvas.width, canvas.height);
-  player.update();
+  genericObjects.forEach(function (genericObject) {
+    genericObject.draw();
+  });
   platforms.forEach(function (platform) {
     platform.draw();
   });
+  player.update();
   if (keys.right.pressed && player.position.x < 400) {
     player.velocity.x = 5;
   } else if (keys.left.pressed && player.position.x > 100) {
@@ -266,8 +347,8 @@ function animate() {
   });
 }
 animate();
-addEventListener("keydown", function (_ref2) {
-  var keyCode = _ref2.keyCode;
+addEventListener("keydown", function (_ref3) {
+  var keyCode = _ref3.keyCode;
   console.log(keyCode);
   switch (keyCode) {
     case 65:
@@ -292,8 +373,8 @@ addEventListener("keydown", function (_ref2) {
       break;
   }
 });
-addEventListener("keyup", function (_ref3) {
-  var keyCode = _ref3.keyCode;
+addEventListener("keyup", function (_ref4) {
+  var keyCode = _ref4.keyCode;
   console.log(keyCode);
   switch (keyCode) {
     case 65:

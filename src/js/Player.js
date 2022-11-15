@@ -1,7 +1,7 @@
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
-canvas.width = innerWidth;
-canvas.height = innerHeight;
+import playerIdle from "../img/idle.gif";
+
 const gravity = .5;
 class Player {
     constructor() {
@@ -13,13 +13,17 @@ class Player {
         x: 0,
         y: 1,
       };
-      this.width = 50;
-      this.height = 50;
+      this.width = 100;
+      this.height = 100;
+      this.image = new Image();
+      this.image.src = playerIdle;
+      
     }
   
     draw() {
-      c.fillStyle = "black";
-      c.fillRect(this.position.x, this.position.y, this.width, this.height);
+      // c.fillStyle = "black";
+      // c.fillRect(this.position.x, this.position.y, this.width, this.height);
+      c.drawImage(this.image, this.position.x, this.position.y, this.width, this.height)
     }
   
     update() {
