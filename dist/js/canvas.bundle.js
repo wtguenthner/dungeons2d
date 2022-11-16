@@ -164,6 +164,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/img/landscape.png":
+/*!*******************************!*\
+  !*** ./src/img/landscape.png ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "b5ed3ae7ba7b38c30c35f7654938df6a.png");
+
+/***/ }),
+
 /***/ "./src/img/platform.png":
 /*!******************************!*\
   !*** ./src/img/platform.png ***!
@@ -358,6 +371,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Player */ "./src/js/Player.js");
 /* harmony import */ var _img_platform_png__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../img/platform.png */ "./src/img/platform.png");
 /* harmony import */ var _img_platform_stone_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../img/platform_stone.png */ "./src/img/platform_stone.png");
+/* harmony import */ var _img_landscape_png__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../img/landscape.png */ "./src/img/landscape.png");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
@@ -365,6 +379,7 @@ var canvas = document.querySelector("canvas");
 var c = canvas.getContext("2d");
 canvas.width = 1024;
 canvas.height = 576;
+
 
 
 
@@ -431,7 +446,14 @@ var genericObjects = [new GenericObject({
   x: 0,
   y: 520,
   image: createImage(_img_water_png__WEBPACK_IMPORTED_MODULE_2__["default"])
-})];
+})
+// new GenericObject({
+//   x: 0,
+//   y: 125,
+//   image: createImage(landscape),
+// }),
+];
+
 var platforms = [new Platform({
   x: 0,
   y: 520,
@@ -481,12 +503,14 @@ function playerDeath() {
   // }, 5000);
 }
 ;
+var x = 0;
 function animate() {
   requestAnimationFrame(animate);
   c.clearRect(0, 0, canvas.width, canvas.height);
   genericObjects.forEach(function (genericObject) {
     genericObject.draw();
   });
+  c.drawImage(createImage(_img_landscape_png__WEBPACK_IMPORTED_MODULE_6__["default"]), x, 123);
   platforms.forEach(function (platform) {
     platform.draw();
   });
@@ -497,6 +521,7 @@ function animate() {
     player.velocity.x = -player.speed;
   } else {
     if (keys.right.pressed) {
+      x -= player.speed;
       platforms.forEach(function (platform) {
         platform.position.x -= player.speed;
       });
@@ -508,6 +533,7 @@ function animate() {
     }
     player.velocity.x = 0;
   }
+
   //platform collision detection
   platforms.forEach(function (platform) {
     if (player.position.y > 415) {

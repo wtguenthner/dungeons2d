@@ -10,7 +10,7 @@ import waterTile from "../img/water.png";
 import { Player } from "./Player";
 import grassPlatform from "../img/platform.png";
 import stonePlatform from "../img/platform_stone.png";
-
+import landscape from "../img/landscape.png";
 
 
 const image = new Image();
@@ -68,6 +68,11 @@ const genericObjects = [
     y: 520,
     image: createImage(waterTile),
   }),
+  // new GenericObject({
+  //   x: 0,
+  //   y: 125,
+  //   image: createImage(landscape),
+  // }),
 ];
 
 
@@ -99,35 +104,40 @@ player.dead = true;
 //  location.reload();
 // }, 5000);
 };
-
+let x=0;
 function animate() {
   requestAnimationFrame(animate);
   c.clearRect(0, 0, canvas.width, canvas.height);
+  
   genericObjects.forEach((genericObject) => {
     genericObject.draw();
   });
- 
+  c.drawImage(createImage(landscape), x, 123);
   platforms.forEach((platform) => {
     platform.draw();
   });
   player.update();
   if (keys.right.pressed && player.position.x < 400) {
+    
     player.velocity.x = player.speed;
   } else if (keys.left.pressed && player.position.x > 100) {
     player.velocity.x = -player.speed;
   } else {
     if (keys.right.pressed) {
+      x-=player.speed;
       platforms.forEach((platform) => {
         platform.position.x -= player.speed;
       });
     }
     if (keys.left.pressed) {
+      
       platforms.forEach((platform) => {
         platform.position.x += player.speed;
       });
     }
     player.velocity.x = 0;
   }
+  
   //platform collision detection
   platforms.forEach((platform) => {
    if(player.position.y > 415){
