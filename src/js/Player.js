@@ -1,43 +1,145 @@
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
-import playerIdle from "../img/idle.gif";
+import idleRight from "../img/Idle-Sheet.png";
+import runRight from "../img/Run-Sheet.png";
+import attackRight from "../img/attack.png";
+import idleLeft from "../img/idleLeft.png";
+import runLeft from "../img/runLeft.png";
 
-const gravity = .5;
+const spriteWidth = 64;
+const spriteHeight = 80;
+let frameX = 0;
+let frameY = 0;
+let gameFrame = 0;
+const staggerFrames = 10;
+const gravity = 1.5;
+
+function createImage(imageSrc) {
+  const image = new Image();
+
+  image.src = imageSrc;
+
+  return image;
+}
+
 class Player {
-    constructor() {
-      this.position = {
-        x: 100,
-        y: 100,
-      };
-      this.velocity = {
-        x: 0,
-        y: 1,
-      };
-      this.width = 100;
-      this.height = 100;
-      this.image = new Image();
-      this.image.src = playerIdle;
-      
-    }
-  
-    draw() {
-      // c.fillStyle = "black";
-      // c.fillRect(this.position.x, this.position.y, this.width, this.height);
-      c.drawImage(this.image, this.position.x, this.position.y, this.width, this.height)
-    }
-  
-    update() {
-      this.draw();
-      this.position.y += this.velocity.y;
-      this.position.x += this.velocity.x;
-      if (this.position.y + this.height + this.velocity.y <= canvas.height) {
-        this.velocity.y += gravity;
-      } else {
-        this.velocity.y = 0;
-      }
-      
-    }
-    
+  constructor() {
+    this.position = {
+      x: 100,
+      y: 100,
+    };
+    this.velocity = {
+      x: 0,
+      y: 1,
+    };
+    this.width = 128;
+    this.height = 160;
+
+    this.image = createImage(idleRight);
+
+    this.frames = 0;
+
+    this.runRight = false;
+    this.runLeft = false;
+    this.attack = false;
+    this.faceRight = true;
+    this.faceLeft = false;
   }
-  
-  export {Player};
+
+  draw() {
+    if(this.attack){
+      c.drawImage(
+        createImage(attackRight),
+        frameX * 96,
+        frameY * 80,
+        96,
+        80,
+        this.position.x,
+        this.position.y,
+        192,
+        this.height
+      );
+     }else
+    if(this.faceLeft){
+      c.drawImage(
+        createImage(idleLeft),
+        frameX * spriteWidth,
+        frameY * spriteHeight,
+        spriteWidth,
+        spriteHeight,
+        this.position.x,
+        this.position.y,
+        this.width,
+        this.height
+      )
+    }else
+    if(this.runLeft){
+      c.drawImage(
+        createImage(runLeft),
+        frameX * 80,
+        frameY * 80,
+        80,
+        80,
+        this.position.x,
+        this.position.y,
+        this.width,
+        this.height
+      );
+    }else
+  {
+    if (this.runRight) {
+      c.drawImage(
+        createImage(runRight),
+        frameX * 80,
+        frameY * 80,
+        80,
+        80,
+        this.position.x,
+        this.position.y,
+        this.width,
+        this.height
+      );
+    }else
+    c.drawImage(
+      this.image,
+      frameX * spriteWidth,
+      frameY * spriteHeight,
+      spriteWidth,
+      spriteHeight,
+      this.position.x,
+      this.position.y,
+      this.width,
+      this.height
+    )
+    };
+
+
+    if (gameFrame % staggerFrames == 0) {
+      if (frameX < 3) frameX++;
+      else frameX = 0;
+    }
+
+    gameFrame++;
+  }
+
+  update() {
+    this.draw();
+
+    //  if(gameFrame % staggerFrames ==0){
+    //   if(this.frames < 5) this.frames++
+    //  }else{
+    //   this.frames = 0;
+    //  }
+    // gameFrame++;
+
+    this.position.y += this.velocity.y;
+    this.position.x += this.velocity.x;
+    if (this.position.y + this.height + this.velocity.y <= canvas.height) {
+      this.velocity.y += gravity;
+    } else {
+      this.velocity.y = 0;
+    }
+  }
+}
+
+export { Player };

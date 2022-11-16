@@ -13,12 +13,16 @@ const platformImages = [grassPlatform, stonePlatform];
 
 const image = new Image();
 image.src = grassPlatform;
+const player = new Player();
 
 function createImage(imageSrc) {
   const image = new Image();
   image.src = imageSrc;
   return image;
 }
+
+
+
 class Platform {
   constructor({ x, y, image }) {
     this.position = {
@@ -41,9 +45,10 @@ class GenericObject {
       x,
       y,
     };
+    this.image = image;
     this.width = image.width;
     this.height = image.height;
-    this.image = image;
+    
   }
 
   draw() {
@@ -59,7 +64,6 @@ const genericObjects = [
   }),
 ];
 
-const player = new Player();
 
 const platforms = [
   new Platform({ x: 0, y: 520, image: createImage(grassPlatform) }),
@@ -106,11 +110,11 @@ function animate() {
   //platform collision detection
   platforms.forEach((platform) => {
     if (
-      player.position.y + player.height <= platform.position.y &&
-      player.position.y + player.height + player.velocity.y >=
+      player.position.y-30 + player.height <= platform.position.y &&
+      player.position.y-30 + player.height + player.velocity.y >=
         platform.position.y &&
-      player.position.x  + player.width >= platform.position.x &&
-      player.position.x  <= platform.position.x + platform.width
+      player.position.x  + player.width-50 >= platform.position.x &&
+      player.position.x <= platform.position.x + platform.width -50
     ) {
       player.velocity.y = 0;
     }
@@ -126,19 +130,25 @@ addEventListener("keydown", ({ keyCode }) => {
       //TODO: instructions for A button
       keys.left.pressed = true;
       player.velocity.x -= 1;
+      player.runLeft = true;
+     player.faceLeft = false;
+      
       break;
     case 68:
       //TODO: instructions for D button
       keys.right.pressed = true;
       player.velocity.x += 1;
+      player.faceLeft = false;
+      player.runRight = true;
       console.log(window);
       break;
     case 83:
       //TODO instructions for S button
+      player.attack = true;
       break;
     case 87:
       //TODO instructions for W button
-
+     
       player.velocity.y -= 20;
 
     default:
@@ -152,19 +162,25 @@ addEventListener("keyup", ({ keyCode }) => {
     case 65:
       //TODO: instructions for A button
       keys.left.pressed = false;
+      player.runLeft = false;
+      player.faceLeft = true;
       player.velocity.x = 0;
       break;
     case 68:
       //TODO: instructions for D button
       keys.right.pressed = false;
       player.velocity.x = 0;
+      player.runRight = false;
+      player.faceRight = true;
       break;
     case 83:
       //TODO instructions for S button
+      player.attack = false;
       break;
     case 87:
       //TODO instructions for W button
       player.velocity.y = 0;
+    
     default:
       break;
   }
