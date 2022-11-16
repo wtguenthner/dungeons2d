@@ -138,6 +138,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/img/death.png":
+/*!***************************!*\
+  !*** ./src/img/death.png ***!
+  \***************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "d859aed8e5212ccb51fc683af57e6a98.png");
+
+/***/ }),
+
 /***/ "./src/img/idleLeft.png":
 /*!******************************!*\
   !*** ./src/img/idleLeft.png ***!
@@ -203,6 +216,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/img/water.png":
+/*!***************************!*\
+  !*** ./src/img/water.png ***!
+  \***************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "6ca892e782d7756ab1f2b45f670cbb72.png");
+
+/***/ }),
+
 /***/ "./src/js/Player.js":
 /*!**************************!*\
   !*** ./src/js/Player.js ***!
@@ -218,6 +244,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _img_attack_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../img/attack.png */ "./src/img/attack.png");
 /* harmony import */ var _img_idleLeft_png__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../img/idleLeft.png */ "./src/img/idleLeft.png");
 /* harmony import */ var _img_runLeft_png__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../img/runLeft.png */ "./src/img/runLeft.png");
+/* harmony import */ var _img_death_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../img/death.png */ "./src/img/death.png");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
@@ -228,11 +255,13 @@ var c = canvas.getContext("2d");
 
 
 
+
 var spriteWidth = 64;
 var spriteHeight = 80;
 var frameX = 0;
 var frameY = 0;
 var gameFrame = 0;
+var maxFrame = 3;
 var staggerFrames = 10;
 var gravity = 1.5;
 function createImage(imageSrc) {
@@ -254,17 +283,22 @@ var Player = /*#__PURE__*/function () {
     this.width = 128;
     this.height = 160;
     this.image = createImage(_img_Idle_Sheet_png__WEBPACK_IMPORTED_MODULE_0__["default"]);
+    this.speed = 10;
     this.frames = 0;
     this.runRight = false;
     this.runLeft = false;
     this.attack = false;
     this.faceRight = true;
     this.faceLeft = false;
+    this.dead = false;
   }
   _createClass(Player, [{
     key: "draw",
     value: function draw() {
-      if (this.attack) {
+      if (this.dead) {
+        maxFrame = 8;
+        c.drawImage(createImage(_img_death_png__WEBPACK_IMPORTED_MODULE_5__["default"]), frameX * 80, frameY * 64, 80, 64, this.position.x, this.position.y, this.width, this.height);
+      } else if (this.attack) {
         c.drawImage(createImage(_img_attack_png__WEBPACK_IMPORTED_MODULE_2__["default"]), frameX * 96, frameY * 80, 96, 80, this.position.x, this.position.y, 192, this.height);
       } else if (this.faceLeft) {
         c.drawImage(createImage(_img_idleLeft_png__WEBPACK_IMPORTED_MODULE_3__["default"]), frameX * spriteWidth, frameY * spriteHeight, spriteWidth, spriteHeight, this.position.x, this.position.y, this.width, this.height);
@@ -275,9 +309,10 @@ var Player = /*#__PURE__*/function () {
           c.drawImage(createImage(_img_Run_Sheet_png__WEBPACK_IMPORTED_MODULE_1__["default"]), frameX * 80, frameY * 80, 80, 80, this.position.x, this.position.y, this.width, this.height);
         } else c.drawImage(this.image, frameX * spriteWidth, frameY * spriteHeight, spriteWidth, spriteHeight, this.position.x, this.position.y, this.width, this.height);
       }
-      ;
       if (gameFrame % staggerFrames == 0) {
-        if (frameX < 3) frameX++;else frameX = 0;
+        if (frameX < maxFrame) frameX++;else if (this.dead) {
+          location.reload();
+        } else frameX = 0;
       }
       gameFrame++;
     }
@@ -319,9 +354,10 @@ var Player = /*#__PURE__*/function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _img_background_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../img/background.png */ "./src/img/background.png");
 /* harmony import */ var _img_platform1_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../img/platform1.png */ "./src/img/platform1.png");
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Player */ "./src/js/Player.js");
-/* harmony import */ var _img_platform_png__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../img/platform.png */ "./src/img/platform.png");
-/* harmony import */ var _img_platform_stone_png__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../img/platform_stone.png */ "./src/img/platform_stone.png");
+/* harmony import */ var _img_water_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../img/water.png */ "./src/img/water.png");
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Player */ "./src/js/Player.js");
+/* harmony import */ var _img_platform_png__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../img/platform.png */ "./src/img/platform.png");
+/* harmony import */ var _img_platform_stone_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../img/platform_stone.png */ "./src/img/platform_stone.png");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
@@ -334,10 +370,10 @@ canvas.height = 576;
 
 
 
-var platformImages = [_img_platform_png__WEBPACK_IMPORTED_MODULE_3__["default"], _img_platform_stone_png__WEBPACK_IMPORTED_MODULE_4__["default"]];
+
 var image = new Image();
-image.src = _img_platform_png__WEBPACK_IMPORTED_MODULE_3__["default"];
-var player = new _Player__WEBPACK_IMPORTED_MODULE_2__["Player"]();
+image.src = _img_platform_png__WEBPACK_IMPORTED_MODULE_4__["default"];
+var player = new _Player__WEBPACK_IMPORTED_MODULE_3__["Player"]();
 function createImage(imageSrc) {
   var image = new Image();
   image.src = imageSrc;
@@ -391,15 +427,43 @@ var genericObjects = [new GenericObject({
   x: 0,
   y: 0,
   image: createImage(_img_background_png__WEBPACK_IMPORTED_MODULE_0__["default"])
+}), new GenericObject({
+  x: 0,
+  y: 520,
+  image: createImage(_img_water_png__WEBPACK_IMPORTED_MODULE_2__["default"])
 })];
 var platforms = [new Platform({
   x: 0,
   y: 520,
-  image: createImage(_img_platform_png__WEBPACK_IMPORTED_MODULE_3__["default"])
+  image: createImage(_img_platform_png__WEBPACK_IMPORTED_MODULE_4__["default"])
 }), new Platform({
   x: image.width - 6,
   y: 520,
-  image: createImage(_img_platform_png__WEBPACK_IMPORTED_MODULE_3__["default"])
+  image: createImage(_img_platform_png__WEBPACK_IMPORTED_MODULE_4__["default"])
+}), new Platform({
+  x: image.width * 2.2,
+  y: 520,
+  image: createImage(_img_platform_png__WEBPACK_IMPORTED_MODULE_4__["default"])
+}), new Platform({
+  x: image.width * 3.3,
+  y: 350,
+  image: createImage(_img_platform1_png__WEBPACK_IMPORTED_MODULE_1__["default"])
+}), new Platform({
+  x: image.width * 4,
+  y: 350,
+  image: createImage(_img_platform1_png__WEBPACK_IMPORTED_MODULE_1__["default"])
+}), new Platform({
+  x: image.width * 4.3,
+  y: 520,
+  image: createImage(_img_platform_png__WEBPACK_IMPORTED_MODULE_4__["default"])
+}), new Platform({
+  x: image.width * 4.3 + image.width,
+  y: 520,
+  image: createImage(_img_platform_png__WEBPACK_IMPORTED_MODULE_4__["default"])
+}), new Platform({
+  x: image.width * 4.3 + image.width * 2,
+  y: 520,
+  image: createImage(_img_platform_png__WEBPACK_IMPORTED_MODULE_4__["default"])
 })];
 var keys = {
   right: {
@@ -409,6 +473,14 @@ var keys = {
     pressed: false
   }
 };
+function playerDeath() {
+  player.dead = true;
+
+  // setInterval(() => {
+  //  location.reload();
+  // }, 5000);
+}
+;
 function animate() {
   requestAnimationFrame(animate);
   c.clearRect(0, 0, canvas.width, canvas.height);
@@ -420,24 +492,27 @@ function animate() {
   });
   player.update();
   if (keys.right.pressed && player.position.x < 400) {
-    player.velocity.x = 5;
+    player.velocity.x = player.speed;
   } else if (keys.left.pressed && player.position.x > 100) {
-    player.velocity.x = -5;
+    player.velocity.x = -player.speed;
   } else {
     if (keys.right.pressed) {
       platforms.forEach(function (platform) {
-        platform.position.x -= 5;
+        platform.position.x -= player.speed;
       });
     }
     if (keys.left.pressed) {
       platforms.forEach(function (platform) {
-        platform.position.x += 5;
+        platform.position.x += player.speed;
       });
     }
     player.velocity.x = 0;
   }
   //platform collision detection
   platforms.forEach(function (platform) {
+    if (player.position.y > 415) {
+      playerDeath();
+    }
     if (player.position.y - 30 + player.height <= platform.position.y && player.position.y - 30 + player.height + player.velocity.y >= platform.position.y && player.position.x + player.width - 50 >= platform.position.x && player.position.x <= platform.position.x + platform.width - 50) {
       player.velocity.y = 0;
     }
@@ -449,14 +524,14 @@ addEventListener("keydown", function (_ref3) {
   console.log(keyCode);
   switch (keyCode) {
     case 65:
-      //TODO: instructions for A button
+      // instructions for A button
       keys.left.pressed = true;
       player.velocity.x -= 1;
       player.runLeft = true;
       player.faceLeft = false;
       break;
     case 68:
-      //TODO: instructions for D button
+      //T instructions for D button
       keys.right.pressed = true;
       player.velocity.x += 1;
       player.faceLeft = false;
@@ -464,13 +539,13 @@ addEventListener("keydown", function (_ref3) {
       console.log(window);
       break;
     case 83:
-      //TODO instructions for S button
+      // instructions for S button
       player.attack = true;
       break;
     case 87:
-      //TODO instructions for W button
+      //instructions for W button
 
-      player.velocity.y -= 20;
+      player.velocity.y -= 25;
     default:
       break;
   }
@@ -480,25 +555,25 @@ addEventListener("keyup", function (_ref4) {
   console.log(keyCode);
   switch (keyCode) {
     case 65:
-      //TODO: instructions for A button
+      //instructions for A button
       keys.left.pressed = false;
       player.runLeft = false;
       player.faceLeft = true;
       player.velocity.x = 0;
       break;
     case 68:
-      //TODO: instructions for D button
+      // instructions for D button
       keys.right.pressed = false;
       player.velocity.x = 0;
       player.runRight = false;
       player.faceRight = true;
       break;
     case 83:
-      //TODO instructions for S button
+      // instructions for S button
       player.attack = false;
       break;
     case 87:
-      //TODO instructions for W button
+      // instructions for W button
       player.velocity.y = 0;
     default:
       break;

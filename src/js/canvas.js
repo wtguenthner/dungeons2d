@@ -6,10 +6,12 @@ canvas.height = 576;
 
 import background from "../img/background.png";
 import platform1 from "../img/platform1.png"
+import waterTile from "../img/water.png";
 import { Player } from "./Player";
 import grassPlatform from "../img/platform.png";
 import stonePlatform from "../img/platform_stone.png";
-const platformImages = [grassPlatform, stonePlatform];
+
+
 
 const image = new Image();
 image.src = grassPlatform;
@@ -20,7 +22,6 @@ function createImage(imageSrc) {
   image.src = imageSrc;
   return image;
 }
-
 
 
 class Platform {
@@ -62,12 +63,23 @@ const genericObjects = [
     y: 0,
     image: createImage(background),
   }),
+  new GenericObject({
+    x: 0,
+    y: 520,
+    image: createImage(waterTile),
+  }),
 ];
 
 
 const platforms = [
   new Platform({ x: 0, y: 520, image: createImage(grassPlatform) }),
   new Platform({ x: image.width-6, y: 520, image: createImage(grassPlatform) }),
+  new Platform({x: image.width *2.2, y:520, image: createImage(grassPlatform)}),
+  new Platform({x: image.width *3.3, y:350, image: createImage(platform1)}),
+  new Platform({x: image.width *4, y:350, image: createImage(platform1)}),
+  new Platform({x: image.width *4.3, y:520, image: createImage(grassPlatform)}),
+  new Platform({x: image.width *4.3 + image.width, y:520, image: createImage(grassPlatform)}),
+  new Platform({x: image.width *4.3 + image.width*2, y:520, image: createImage(grassPlatform)})
 ];
 
 const keys = {
@@ -77,6 +89,15 @@ const keys = {
   left: {
     pressed: false,
   },
+};
+
+function playerDeath(){
+player.dead = true;
+
+
+// setInterval(() => {
+//  location.reload();
+// }, 5000);
 };
 
 function animate() {
@@ -91,24 +112,28 @@ function animate() {
   });
   player.update();
   if (keys.right.pressed && player.position.x < 400) {
-    player.velocity.x = 5;
+    player.velocity.x = player.speed;
   } else if (keys.left.pressed && player.position.x > 100) {
-    player.velocity.x = -5;
+    player.velocity.x = -player.speed;
   } else {
     if (keys.right.pressed) {
       platforms.forEach((platform) => {
-        platform.position.x -= 5;
+        platform.position.x -= player.speed;
       });
     }
     if (keys.left.pressed) {
       platforms.forEach((platform) => {
-        platform.position.x += 5;
+        platform.position.x += player.speed;
       });
     }
     player.velocity.x = 0;
   }
   //platform collision detection
   platforms.forEach((platform) => {
+   if(player.position.y > 415){
+    playerDeath();
+   }
+
     if (
       player.position.y-30 + player.height <= platform.position.y &&
       player.position.y-30 + player.height + player.velocity.y >=
@@ -127,7 +152,7 @@ addEventListener("keydown", ({ keyCode }) => {
 
   switch (keyCode) {
     case 65:
-      //TODO: instructions for A button
+      // instructions for A button
       keys.left.pressed = true;
       player.velocity.x -= 1;
       player.runLeft = true;
@@ -135,7 +160,7 @@ addEventListener("keydown", ({ keyCode }) => {
       
       break;
     case 68:
-      //TODO: instructions for D button
+      //T instructions for D button
       keys.right.pressed = true;
       player.velocity.x += 1;
       player.faceLeft = false;
@@ -143,13 +168,13 @@ addEventListener("keydown", ({ keyCode }) => {
       console.log(window);
       break;
     case 83:
-      //TODO instructions for S button
+      // instructions for S button
       player.attack = true;
       break;
     case 87:
-      //TODO instructions for W button
+      //instructions for W button
      
-      player.velocity.y -= 20;
+      player.velocity.y -= 25;
 
     default:
       break;
@@ -160,25 +185,25 @@ addEventListener("keyup", ({ keyCode }) => {
 
   switch (keyCode) {
     case 65:
-      //TODO: instructions for A button
+      //instructions for A button
       keys.left.pressed = false;
       player.runLeft = false;
       player.faceLeft = true;
       player.velocity.x = 0;
       break;
     case 68:
-      //TODO: instructions for D button
+      // instructions for D button
       keys.right.pressed = false;
       player.velocity.x = 0;
       player.runRight = false;
       player.faceRight = true;
       break;
     case 83:
-      //TODO instructions for S button
+      // instructions for S button
       player.attack = false;
       break;
     case 87:
-      //TODO instructions for W button
+      // instructions for W button
       player.velocity.y = 0;
     
     default:

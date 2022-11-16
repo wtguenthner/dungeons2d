@@ -5,12 +5,13 @@ import runRight from "../img/Run-Sheet.png";
 import attackRight from "../img/attack.png";
 import idleLeft from "../img/idleLeft.png";
 import runLeft from "../img/runLeft.png";
-
+import death from "../img/death.png";
 const spriteWidth = 64;
 const spriteHeight = 80;
 let frameX = 0;
 let frameY = 0;
 let gameFrame = 0;
+let maxFrame = 3;
 const staggerFrames = 10;
 const gravity = 1.5;
 
@@ -36,7 +37,7 @@ class Player {
     this.height = 160;
 
     this.image = createImage(idleRight);
-
+    this.speed = 10;
     this.frames = 0;
 
     this.runRight = false;
@@ -44,10 +45,24 @@ class Player {
     this.attack = false;
     this.faceRight = true;
     this.faceLeft = false;
+    this.dead = false;
   }
 
   draw() {
-    if(this.attack){
+    if (this.dead) {
+      maxFrame = 8;
+      c.drawImage(
+        createImage(death),
+        frameX * 80,
+        frameY * 64,
+        80,
+        64,
+        this.position.x,
+        this.position.y,
+        this.width,
+        this.height
+      );
+    } else if (this.attack) {
       c.drawImage(
         createImage(attackRight),
         frameX * 96,
@@ -59,8 +74,7 @@ class Player {
         192,
         this.height
       );
-     }else
-    if(this.faceLeft){
+    } else if (this.faceLeft) {
       c.drawImage(
         createImage(idleLeft),
         frameX * spriteWidth,
@@ -71,9 +85,8 @@ class Player {
         this.position.y,
         this.width,
         this.height
-      )
-    }else
-    if(this.runLeft){
+      );
+    } else if (this.runLeft) {
       c.drawImage(
         createImage(runLeft),
         frameX * 80,
@@ -85,38 +98,38 @@ class Player {
         this.width,
         this.height
       );
-    }else
-  {
-    if (this.runRight) {
-      c.drawImage(
-        createImage(runRight),
-        frameX * 80,
-        frameY * 80,
-        80,
-        80,
-        this.position.x,
-        this.position.y,
-        this.width,
-        this.height
-      );
-    }else
-    c.drawImage(
-      this.image,
-      frameX * spriteWidth,
-      frameY * spriteHeight,
-      spriteWidth,
-      spriteHeight,
-      this.position.x,
-      this.position.y,
-      this.width,
-      this.height
-    )
-    };
-
+    } else {
+      if (this.runRight) {
+        c.drawImage(
+          createImage(runRight),
+          frameX * 80,
+          frameY * 80,
+          80,
+          80,
+          this.position.x,
+          this.position.y,
+          this.width,
+          this.height
+        );
+      } else
+        c.drawImage(
+          this.image,
+          frameX * spriteWidth,
+          frameY * spriteHeight,
+          spriteWidth,
+          spriteHeight,
+          this.position.x,
+          this.position.y,
+          this.width,
+          this.height
+        );
+    }
 
     if (gameFrame % staggerFrames == 0) {
-      if (frameX < 3) frameX++;
-      else frameX = 0;
+      if (frameX < maxFrame) frameX++;
+      else if (this.dead) {
+        location.reload();
+      } else frameX = 0;
     }
 
     gameFrame++;
